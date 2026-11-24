@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gibson Law Chambers | Premium Legal Counsel</title>
+    <meta name="description" content="Gibson Law Chambers is dedicated to providing comprehensive legal solutions in Juba, South Sudan. We combine traditional legal rigor with a modern, strategic approach.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1A1A1A',   // Deep Charcoal
+                        secondary: '#D9381E', // Crimson Red (from logo)
+                        accent: '#F4F1EA',    // Warm Ivory
+                        surface: '#FFFFFF',
+                        muted: '#6B6B6B'
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* 3D & Animation Utilities */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        
+        .preserve-3d {
+            transform-style: preserve-3d;
+        }
+
+        .reveal-text {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        }
+
+        .reveal-text span {
+            display: inline-block;
+            transform: translateY(100%);
+            opacity: 0;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+        }
+
+        .reveal-text.visible span {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tilt-card {
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            transform-style: preserve-3d;
+        }
+
+        .tilt-card:hover {
+            transform: rotateY(5deg) rotateX(5deg) translateY(-5px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        .hero-parallax {
+            transform: translateZ(-20px) scale(1.1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1A1A1A; }
+        ::-webkit-scrollbar-thumb { background: #D9381E; }
+        ::-webkit-scrollbar-thumb:hover { background: #b52d16; }
+
+        /* Cinematic Background Pattern */
+        .bg-grid {
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-accent text-primary overflow-x-hidden selection:bg-secondary selection:text-white">
+
+    <!-- NAVIGATION -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 py-6 bg-transparent">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#home" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 bg-secondary flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-500 shadow-lg">
+                    <span class="text-white font-serif font-bold text-xl italic">G</span>
+                </div>
+                <div>
+                    <h1 class="text-white font-serif text-xl tracking-wide transition-colors duration-300" id="logo-text">Gibson Law</h1>
+                    <p class="text-secondary text-[10px] uppercase tracking-[0.2em] font-semibold">Chambers</p>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="text-gray-300 hover:text-secondary text-sm uppercase tracking-widest transition-colors duration-300">Home</a>
+                <a href="#about" class="text-gray-300 hover:text-secondary text-sm uppercase tracking-widest transition-colors duration-300">About</a>
+                <a href="#services" class="text-gray-300 hover:text-secondary text-sm uppercase tracking-widest transition-colors duration-300">Services</a>
+                <a href="#contact" class="border border-secondary text-secondary px-6 py-2 text-sm uppercase tracking-widest hover:bg-secondary hover:text-white transition-all duration-300">Consult</a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-btn" class="md:hidden text-white">
+                <i data-lucide="menu" size="28"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-primary border-t border-white/10 py-6 flex-col items-center space-y-6 shadow-2xl">
+            <a href="#home" class="text-gray-300 hover:text-secondary text-lg font-serif transition-colors mobile-link">Home</a>
+            <a href="#about" class="text-gray-300 hover:text-secondary text-lg font-serif transition-colors mobile-link">About</a>
+            <a href="#services" class="text-gray-300 hover:text-secondary text-lg font-serif transition-colors mobile-link">Services</a>
+            <a href="#contact" class="border border-secondary text-secondary px-8 py-3 text-sm uppercase tracking-widest hover:bg-secondary hover:text-white transition-all duration-300 mobile-link">Consult</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION (3D Cinematic) -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden bg-primary perspective-1000">
+        
+        <!-- 3D Background Layers -->
+        <div class="absolute inset-0 z-0 preserve-3d">
+            <!-- Image Layer with Parallax -->
+            <div class="absolute inset-0 hero-parallax">
+                <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
+                     alt="Law Library" 
+                     class="w-full h-full object-cover opacity-20 grayscale">
+            </div>
+            <!-- Gradient Overlays -->
+            <div class="absolute inset-0 bg-gradient-to-b from-primary via-primary/80 to-primary"></div>
+            <div class="absolute inset-0 bg-grid"></div>
+            
+            <!-- Floating 3D Element (Abstract Scales) -->
+            <div class="absolute top-1/4 right-10 md:right-1/4 w-64 h-64 border border-secondary/30 transform rotate-45 animate-[spin_20s_linear_infinite] opacity-50"></div>
+            <div class="absolute bottom-1/4 left-10 md:left-1/4 w-48 h-48 border border-white/10 transform -rotate-12 animate-[pulse_4s_ease-in-out_infinite]"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="relative z-10 max-w-6xl mx-auto px-6 text-center mt-20">
+            <div class="fade-up">
+                <div class="inline-flex items-center gap-2 px-4 py-2 border border-secondary/30 bg-secondary/10 backdrop-blur-sm mb-8">
+                    <span class="w-2 h-2 bg-secondary rounded-full animate-pulse"></span>
+                    <span class="text-secondary text-xs uppercase tracking-[0.2em] font-semibold">Juba, South Sudan</span>
+                </div>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif text-white leading-[1.1] mb-8 reveal-text visible">
+                <span>Justice. Integrity.</span><br />
+                <span class="text-secondary italic">Excellence.</span>
+            </h1>
+            
+            <div class="fade-up delay-200">
+                <p class="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-light leading-relaxed">
+                    Gibson Law Chambers is dedicated to providing comprehensive legal solutions. We blend traditional legal rigor with a modern, strategic approach to protect your interests.
+                </p>
+            </div>
+
+            <div class="fade-up delay-300 flex flex-col sm:flex-row items-center justify-center gap-6">
+                <a href="#contact" class="group relative w-full sm:w-auto bg-secondary text-white px-10 py-5 text-sm uppercase tracking-widest font-semibold overflow-hidden">
+                    <div class="absolute inset-0 bg-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out"></div>
+                    <span class="relative z-10 group-hover:text-primary transition-colors duration-300 flex items-center justify-center gap-2">
+                        Request Consultation
+                        <i data-lucide="arrow-right" size="16" class="group-hover:translate-x-1 transition-transform"></i>
+                    </span>
+                </a>
+                <a href="#services" class="w-full sm:w-auto border border-white/20 text-white px-10 py-5 text-sm uppercase tracking-widest hover:border-secondary hover:text-secondary transition-all duration-300 backdrop-blur-sm">
+                    Our Services
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce z-10">
+            <span class="text-gray-400 text-xs uppercase tracking-widest mb-2">Explore</span>
+            <div class="w-[1px] h-12 bg-gradient-to-b from-secondary to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-32 bg-accent relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                
+                <!-- Text Content -->
+                <div class="fade-up">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="h-[2px] w-12 bg-secondary"></div>
+                        <span class="text-secondary uppercase tracking-[0.2em] text-sm font-bold">About The Chambers</span>
+                    </div>
+                    <h2 class="text-4xl md:text-6xl font-serif text-primary mb-8 leading-tight text-balance">
+                        A Legacy of <br />
+                        <span class="italic text-secondary">Legal Excellence.</span>
+                    </h2>
+                    <p class="text-muted mb-6 text-lg leading-relaxed">
+                        Located in the heart of Juba Market, Gibson Law Chambers stands as a beacon of legal integrity and professional excellence. We are dedicated to providing comprehensive legal solutions tailored to the unique needs of our clients.
+                    </p>
+                    <p class="text-muted mb-10 text-lg leading-relaxed">
+                        Our practice is built on a foundation of trust, discretion, and an unwavering commitment to justice. We navigate complex legal landscapes to ensure our clients achieve the best possible outcomes.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 shadow-sm border-l-4 border-secondary tilt-card">
+                            <i data-lucide="scale" class="w-8 h-8 text-secondary mb-4"></i>
+                            <h4 class="text-primary font-serif text-xl mb-2">Integrity First</h4>
+                            <p class="text-muted text-sm">Upholding the highest ethical standards in every case.</p>
+                        </div>
+                        <div class="bg-white p-6 shadow-sm border-l-4 border-primary tilt-card">
+                            <i data-lucide="shield-check" class="w-8 h-8 text-primary mb-4"></i>
+                            <h4 class="text-primary font-serif text-xl mb-2">Client Focused</h4>
+                            <p class="text-muted text-sm">Your interests are at the center of our legal strategy.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3D Image Composition -->
+                <div class="relative perspective-1000 fade-up delay-200">
+                    <div class="relative preserve-3d transform rotate-y-12 rotate-x-6 hover:rotate-y-0 hover:rotate-x-0 transition-transform duration-700">
+                        <!-- Background Frame -->
+                        <div class="absolute inset-0 border-2 border-secondary transform translate-x-6 translate-y-6 rounded-sm"></div>
+                        <!-- Main Image -->
+                        <img src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Gibson Law Chambers Office" 
+                             class="relative z-10 w-full h-[500px] object-cover shadow-2xl rounded-sm">
+                        <!-- Floating Badge -->
+                        <div class="absolute -bottom-8 -left-8 z-20 bg-primary p-8 text-white max-w-xs shadow-2xl transform translate-z-10">
+                            <h3 class="font-serif text-3xl mb-2 text-secondary">100%</h3>
+                            <p class="text-sm text-gray-300 leading-tight">Commitment to your legal success.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION (3D Cards) -->
+    <section id="services" class="py-32 bg-primary text-white relative">
+        <div class="absolute inset-0 bg-grid opacity-10"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-20 fade-up">
+                <div class="flex items-center justify-center gap-4 mb-4">
+                    <div class="h-[2px] w-12 bg-secondary"></div>
+                    <span class="text-secondary uppercase tracking-[0.2em] text-sm font-bold">Our Expertise</span>
+                    <div class="h-[2px] w-12 bg-secondary"></div>
+                </div>
+                <h2 class="text-4xl md:text-6xl font-serif mb-6 text-balance">Legal Solutions</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg font-light">
+                    Comprehensive legal services designed to address the complex challenges of today's world.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-1000">
+                <!-- Service 1 -->
+                <div class="bg-[#222222] p-10 border border-white/5 hover:border-secondary transition-all duration-500 group relative overflow-hidden tilt-card fade-up">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full transform translate-x-16 -translate-y-16 group-hover:translate-x-8 group-hover:-translate-y-8 transition-transform duration-500"></div>
+                    <div class="text-secondary mb-8 p-4 bg-primary inline-block rounded-sm shadow-inner transform group-hover:scale-110 transition-transform">
+                        <i data-lucide="building-2" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif mb-4 group-hover:text-secondary transition-colors">Corporate & Commercial</h3>
+                    <p class="text-gray-400 mb-8 text-sm leading-relaxed">Comprehensive legal support for business formation, governance, mergers, and cross-border transactions.</p>
+                    <a href="#contact" class="inline-flex items-center text-sm uppercase tracking-widest text-white group-hover:text-secondary transition-colors">Learn More <i data-lucide="arrow-right" size="14" class="ml-2 group-hover:translate-x-2 transition-transform"></i></a>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-[#222222] p-10 border border-white/5 hover:border-secondary transition-all duration-500 group relative overflow-hidden tilt-card fade-up delay-100">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full transform translate-x-16 -translate-y-16 group-hover:translate-x-8 group-hover:-translate-y-8 transition-transform duration-500"></div>
+                    <div class="text-secondary mb-8 p-4 bg-primary inline-block rounded-sm shadow-inner transform group-hover:scale-110 transition-transform">
+                        <i data-lucide="gavel" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif mb-4 group-hover:text-secondary transition-colors">Litigation & Dispute Resolution</h3>
+                    <p class="text-gray-400 mb-8 text-sm leading-relaxed">Robust representation in complex commercial litigation, arbitration, and alternative dispute resolution.</p>
+                    <a href="#contact" class="inline-flex items-center text-sm uppercase tracking-widest text-white group-hover:text-secondary transition-colors">Learn More <i data-lucide="arrow-right" size="14" class="ml-2 group-hover:translate-x-2 transition-transform"></i></a>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-[#222222] p-10 border border-white/5 hover:border-secondary transition-all duration-500 group relative overflow-hidden tilt-card fade-up delay-200">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full transform translate-x-16 -translate-y-16 group-hover:translate-x-8 group-hover:-translate-y-8 transition-transform duration-500"></div>
+                    <div class="text-secondary mb-8 p-4 bg-primary inline-block rounded-sm shadow-inner transform group-hover:scale-110 transition-transform">
+                        <i data-lucide="home" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif mb-4 group-hover:text-secondary transition-colors">Property & Real Estate</h3>
+                    <p class="text-gray-400 mb-8 text-sm leading-relaxed">Expert legal advice on property transactions, land disputes, leases, and real estate development.</p>
+                    <a href="#contact" class="inline-flex items-center text-sm uppercase tracking-widest text-white group-hover:text-secondary transition-colors">Learn More <i data-lucide="arrow-right" size="14" class="ml-2 group-hover:translate-x-2 transition-transform"></i></a>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="bg-[#222222] p-10 border border-white/5 hover:border-secondary transition-all duration-500 group relative overflow-hidden tilt-card fade-up">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full transform translate-x-16 -translate-y-16 group-hover:translate-x-8 group-hover:-translate-y-8 transition-transform duration-500"></div>
+                    <div class="text-secondary mb-8 p-4 bg-primary inline-block rounded-sm shadow-inner transform group-hover:scale-110 transition-transform">
+                        <i data-lucide="users" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif mb-4 group-hover:text-secondary transition-colors">Family Law</h3>
+                    <p class="text-gray-400 mb-8 text-sm leading-relaxed">Sensitive and professional handling of divorce, custody, inheritance, and family-related legal matters.</p>
+                    <a href="#contact" class="inline-flex items-center text-sm uppercase tracking-widest text-white group-hover:text-secondary transition-colors">Learn More <i data-lucide="arrow-right" size="14" class="ml-2 group-hover:translate-x-2 transition-transform"></i></a>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="bg-[#222222] p-10 border border-white/5 hover:border-secondary transition-all duration-500 group relative overflow-hidden tilt-card fade-up delay-100">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full transform translate-x-16 -translate-y-16 group-hover:translate-x-8 group-hover:-translate-y-8 transition-transform duration-500"></div>
+                    <div class="text-secondary mb-8 p-4 bg-primary inline-block rounded-sm shadow-inner transform group-hover:scale-110 transition-transform">
+                        <i data-lucide="briefcase" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif mb-4 group-hover:text-secondary transition-colors">Employment & Labour</h3>
+                    <p class="text-gray-400 mb-8 text-sm leading-relaxed">Advising both employers and employees on contracts, disputes, compliance, and workplace regulations.</p>
+                    <a href="#contact" class="inline-flex items-center text-sm uppercase tracking-widest text-white group-hover:text-secondary transition-colors">Learn More <i data-lucide="arrow-right" size="14" class="ml-2 group-hover:translate-x-2 transition-transform"></i></a>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="bg-[#222222] p-10 border border-white/5 hover:border-secondary transition-all duration-500 group relative overflow-hidden tilt-card fade-up delay-200">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 rounded-bl-full transform translate-x-16 -translate-y-16 group-hover:translate-x-8 group-hover:-translate-y-8 transition-transform duration-500"></div>
+                    <div class="text-secondary mb-8 p-4 bg-primary inline-block rounded-sm shadow-inner transform group-hover:scale-110 transition-transform">
+                        <i data-lucide="landmark" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif mb-4 group-hover:text-secondary transition-colors">Banking & Finance</h3>
+                    <p class="text-gray-400 mb-8 text-sm leading-relaxed">Legal advisory on financial regulations, secured lending, project finance, and banking compliance.</p>
+                    <a href="#contact" class="inline-flex items-center text-sm uppercase tracking-widest text-white group-hover:text-secondary transition-colors">Learn More <i data-lucide="arrow-right" size="14" class="ml-2 group-hover:translate-x-2 transition-transform"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="py-32 bg-accent relative overflow-hidden">
+        <!-- Decorative 3D Elements -->
+        <div class="absolute -top-20 -right-20 w-96 h-96 border border-secondary/20 rounded-full transform rotate-45"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="bg-primary shadow-2xl overflow-hidden flex flex-col lg:flex-row fade-up">
+                
+                <!-- Contact Info -->
+                <div class="w-full lg:w-2/5 p-12 lg:p-16 relative overflow-hidden bg-[#111]">
+                    <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
+                       <i data-lucide="scale" class="w-96 h-96 text-white absolute -bottom-20 -left-20"></i>
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <h2 class="text-4xl font-serif text-white mb-4">Get in Touch</h2>
+                        <p class="text-gray-400 mb-12 text-sm leading-relaxed">
+                            We are ready to assist you with your legal needs. Contact our chambers to schedule a confidential consultation.
+                        </p>
+
+                        <div class="space-y-8">
+                            <div class="flex items-start gap-4 group">
+                                <div class="w-12 h-12 bg-white/5 flex items-center justify-center group-hover:bg-secondary transition-colors">
+                                    <i data-lucide="map-pin" class="w-5 h-5 text-secondary group-hover:text-white transition-colors"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-serif text-lg mb-1">Location</h4>
+                                    <p class="text-gray-400 text-sm">Juba Market, Juba,<br />South Sudan</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-4 group">
+                                <div class="w-12 h-12 bg-white/5 flex items-center justify-center group-hover:bg-secondary transition-colors">
+                                    <i data-lucide="phone" class="w-5 h-5 text-secondary group-hover:text-white transition-colors"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-serif text-lg mb-1">Telephone</h4>
+                                    <a href="tel:+211922264090" class="text-gray-400 text-sm hover:text-secondary transition-colors">+211 922 264 090</a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4 group">
+                                <div class="w-12 h-12 bg-white/5 flex items-center justify-center group-hover:bg-secondary transition-colors">
+                                    <i data-lucide="clock" class="w-5 h-5 text-secondary group-hover:text-white transition-colors"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-serif text-lg mb-1">Hours</h4>
+                                    <p class="text-gray-400 text-sm">Open · Closes 17:00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="w-full lg:w-3/5 bg-white p-12 lg:p-16 relative">
+                    <h3 class="text-3xl font-serif text-primary mb-2">Send a Message</h3>
+                    <p class="text-muted text-sm mb-10">Please provide a brief overview of your legal matter.</p>
+                    
+                    <form id="contactForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="relative">
+                                <input required type="text" id="name" class="peer w-full border-b-2 border-gray-200 py-3 focus:outline-none focus:border-secondary transition-colors bg-transparent placeholder-transparent" placeholder="Full Name">
+                                <label for="name" class="absolute left-0 -top-3.5 text-xs uppercase tracking-widest text-muted transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-secondary">Full Name *</label>
+                            </div>
+                            <div class="relative">
+                                <input required type="email" id="email" class="peer w-full border-b-2 border-gray-200 py-3 focus:outline-none focus:border-secondary transition-colors bg-transparent placeholder-transparent" placeholder="Email">
+                                <label for="email" class="absolute left-0 -top-3.5 text-xs uppercase tracking-widest text-muted transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-xs peer-focus:text-secondary">Email Address *</label>
+                            </div>
+                        </div>
+                        
+                        <div class="relative pt-4">
+                            <input type="tel" id="phone" class="peer w-full border-b-2 border-gray-200 py-3 focus:outline-none focus:border-secondary transition-colors bg-transparent placeholder-transparent" placeholder="Phone">
+                            <label for="phone" class="absolute left-0 -top-0.5 text-xs uppercase tracking-widest text-muted transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-6 peer-placeholder-shown:text-gray-400 peer-focus:-top-0.5 peer-focus:text-xs peer-focus:text-secondary">Phone Number</label>
+                        </div>
+
+                        <div class="relative pt-4">
+                            <select id="service" class="w-full border-b-2 border-gray-200 py-3 focus:outline-none focus:border-secondary transition-colors bg-transparent text-gray-600 appearance-none cursor-pointer">
+                                <option value="">Select Practice Area</option>
+                                <option value="corporate">Corporate & Commercial</option>
+                                <option value="litigation">Litigation & Dispute Resolution</option>
+                                <option value="property">Property & Real Estate</option>
+                                <option value="family">Family Law</option>
+                                <option value="employment">Employment & Labour</option>
+                                <option value="banking">Banking & Finance</option>
+                                <option value="other">Other Enquiry</option>
+                            </select>
+                            <i data-lucide="chevron-down" class="absolute right-0 top-7 text-gray-400 pointer-events-none"></i>
+                        </div>
+
+                        <div class="relative pt-4">
+                            <textarea required id="message" rows="4" class="peer w-full border-b-2 border-gray-200 py-3 focus:outline-none focus:border-secondary transition-colors bg-transparent placeholder-transparent resize-none" placeholder="Message"></textarea>
+                            <label for="message" class="absolute left-0 -top-0.5 text-xs uppercase tracking-widest text-muted transition-all peer-placeholder-shown:text-base peer-placeholder-shown:top-6 peer-placeholder-shown:text-gray-400 peer-focus:-top-0.5 peer-focus:text-xs peer-focus:text-secondary">Brief Message *</label>
+                        </div>
+
+                        <button type="submit" id="submitBtn" class="mt-8 group relative w-full bg-primary text-white px-10 py-5 text-sm uppercase tracking-widest font-semibold overflow-hidden">
+                            <div class="absolute inset-0 bg-secondary transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out"></div>
+                            <span class="relative z-10 flex items-center justify-center gap-2" id="btnText">
+                                Submit Enquiry
+                                <i data-lucide="send" size="16" class="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                            </span>
+                        </button>
+                        
+                        <div id="formSuccess" class="hidden text-green-600 text-sm mt-4 flex items-center gap-2 font-medium">
+                            <i data-lucide="check-circle" size="18"></i> Thank you. Your enquiry has been received.
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-primary text-white py-16 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-8 h-8 bg-secondary flex items-center justify-center">
+                            <span class="text-white font-serif font-bold text-sm italic">G</span>
+                        </div>
+                        <div>
+                            <h1 class="text-white font-serif text-xl tracking-wide">Gibson Law</h1>
+                            <p class="text-secondary text-[10px] uppercase tracking-[0.2em] font-semibold">Chambers</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm max-w-sm leading-relaxed mb-8">
+                        Dedicated to providing comprehensive legal solutions. We combine traditional legal rigor with a modern, strategic approach to protect your interests.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 bg-white/5 flex items-center justify-center hover:bg-secondary transition-colors"><i data-lucide="linkedin" size="18"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/5 flex items-center justify-center hover:bg-secondary transition-colors"><i data-lucide="twitter" size="18"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/5 flex items-center justify-center hover:bg-secondary transition-colors"><i data-lucide="facebook" size="18"></i></a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-white uppercase tracking-widest text-sm font-bold mb-6">Quick Links</h4>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li><a href="#home" class="hover:text-secondary transition-colors flex items-center gap-2"><i data-lucide="chevron-right" size="14"></i> Home</a></li>
+                        <li><a href="#about" class="hover:text-secondary transition-colors flex items-center gap-2"><i data-lucide="chevron-right" size="14"></i> About Us</a></li>
+                        <li><a href="#services" class="hover:text-secondary transition-colors flex items-center gap-2"><i data-lucide="chevron-right" size="14"></i> Services</a></li>
+                        <li><a href="#contact" class="hover:text-secondary transition-colors flex items-center gap-2"><i data-lucide="chevron-right" size="14"></i> Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white uppercase tracking-widest text-sm font-bold mb-6">Contact Info</h4>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="map-pin" size="16" class="mt-1 flex-shrink-0 text-secondary"></i>
+                            <span>Juba Market, Juba,<br />South Sudan</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="phone" size="16" class="flex-shrink-0 text-secondary"></i>
+                            <a href="tel:+211922264090" class="hover:text-white transition-colors">+211 922 264 090</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i data-lucide="clock" size="16" class="flex-shrink-0 text-secondary"></i>
+                            <span>Open · Closes 17:00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+                <p>&copy; 2024 Gibson Law Chambers. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-white transition-colors">Disclaimer</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-primary/95', 'backdrop-blur-md', 'py-4', 'shadow-lg');
+                navbar.classList.remove('py-6', 'bg-transparent');
+            } else {
+                navbar.classList.remove('bg-primary/95', 'backdrop-blur-md', 'py-4', 'shadow-lg');
+                navbar.classList.add('py-6', 'bg-transparent');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        mobileMenuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
+                mobileMenuBtn.innerHTML = '<i data-lucide="x" size="28"></i>';
+            } else {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                mobileMenuBtn.innerHTML = '<i data-lucide="menu" size="28"></i>';
+            }
+            lucide.createIcons();
+        });
+
+        // Close mobile menu on link click
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                mobileMenuBtn.innerHTML = '<i data-lucide="menu" size="28"></i>';
+                isMenuOpen = false;
+                lucide.createIcons();
+            });
+        });
+
+        // Intersection Observer for Scroll Animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(element => {
+            observer.observe(element);
+        });
+        
+        // Trigger hero reveal on load
+        setTimeout(() => {
+            document.querySelectorAll('.reveal-text').forEach(el => el.classList.add('visible'));
+        }, 100);
+
+        // Contact Form Handling
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const formSuccess = document.getElementById('formSuccess');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            submitBtn.disabled = true;
+            submitBtn.classList.remove('bg-primary', 'hover:bg-secondary');
+            submitBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+            btnText.innerHTML = 'Processing...';
+            
+            // Simulate API Call
+            setTimeout(() => {
+                submitBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
+                submitBtn.classList.add('bg-green-600');
+                btnText.innerHTML = 'Message Sent Successfully';
+                
+                formSuccess.classList.remove('hidden');
+                contactForm.reset();
+
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('bg-green-600');
+                    submitBtn.classList.add('bg-primary', 'hover:bg-secondary');
+                    btnText.innerHTML = 'Submit Enquiry <i data-lucide="send" size="16" class="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>';
+                    formSuccess.classList.add('hidden');
+                    lucide.createIcons();
+                }, 3000);
+
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
